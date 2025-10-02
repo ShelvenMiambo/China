@@ -1,0 +1,103 @@
+Entendido! Vou criar um prompt completo para você usar no V0 (da Vercel, uma ferramenta de geração de interfaces com IA) para desenvolver um sistema web que atenda ao seu negócio Maputo Import Hub. O sistema será um catálogo online com gerenciamento de estoque e vendas, otimizado para sua parceria de importação de materiais de construção, móveis e eletrônicos da China para Maputo, Moçambique. O prompt será detalhado, incluindo funcionalidades, design, e especificações técnicas, considerando que você é estudante de Engenharia Informática e pode ajustar o código gerado. O objetivo é criar um sistema funcional, simples e alinhado com os preços e processos descritos anteriormente.Prompt Completo para o V0Prompt:
+"Crie um sistema web completo para o 'Maputo Import Hub', uma plataforma de importação e venda de produtos chineses (materiais de construção, móveis, eletrônicos) em Maputo, Moçambique. O sistema deve ser um catálogo online com gerenciamento de estoque e vendas, voltado para clientes B2B (construtoras, lojas) e B2C (consumidores finais). Use React com Next.js (TypeScript), estilização com Tailwind CSS, e banco de dados simples com Supabase ou JSON local para armazenar produtos, estoque e pedidos. A interface deve ser limpa, moderna, responsiva, com cores azul/vermelho (representando China/Moçambique) e toques de amarelo (call-to-action). O sistema será hospedado em um domínio .mz (ex.: maputoimporthub.mz) com orçamento de 5.000 MZN (hospedagem Bluehost ou Vercel). O prazo de desenvolvimento é de 1-2 semanas, e o sistema deve suportar crescimento futuro (ex.: integração com WhatsApp Business).Funcionalidades Específicas:Página Inicial (Catálogo):  Exibir produtos em grade:  Categorias: Materiais de Construção (tijolos, janelas, sabotas), Móveis, Eletrônicos (telefones, computadores).  
+Cada produto mostra: Nome, imagem, preço em MZN (ex.: Tijolo - 25 MZN, Janela - 1.600 MZN, Telefone - 5.000 MZN), estoque disponível (ex.: 5.000 unidades).
+Filtro por categoria e busca por palavra-chave.  
+Botão 'Pedir Orçamento' (abre formulário ou WhatsApp).  
+Design: Carrossel de destaque (ex.: 'Tijolos por apenas 25 MZN!'), ícones de construção/celular, fundo azul com botões amarelos.
+Página de Produto:  Detalhes: Descrição (ex.: 'Tijolo cerâmico 20x20cm, importado da China'), preço, estoque, imagens (mínimo 2 por produto).  
+Botão 'Adicionar ao Carrinho' (para B2C) e 'Solicitar Cotação' (para B2B, envia para WhatsApp ou formulário).  
+Exibir preços em MZN e USD (ex.: Tijolo - 25 MZN / 0,39 USD, câmbio 64 MZN/USD).  
+Design: Layout limpo, imagem grande à esquerda, detalhes à direita, botão amarelo.
+Carrinho e Checkout:  Carrinho: Lista produtos selecionados, quantidade, total em MZN/USD.  
+Checkout: Formulário com nome, email, telefone, endereço (Maputo), opção de entrega (ex.: retirada em depósito, 20.000 MZN/mês).  
+Integração com WhatsApp Business: Enviar pedido direto (ex.: 'Quero 5.000 tijolos, total 125.000 MZN').  
+Design: Tabela de itens, botão 'Confirmar' amarelo, fundo branco.
+Painel de Administração (Protegido):  Login: Simples (email/senha, ex.: admin@maputoimporthub.mz).  
+Gerenciar produtos: Adicionar/editar/excluir (campos: nome, categoria, preço MZN/USD, estoque, imagens).  
+Gerenciar estoque: Atualizar quantidades (ex.: 5.000 tijolos → 4.000 após venda).  
+Relatórios: Exportar vendas (CSV) com total vendido, lucro (ex.: 65.000 MZN em 1 lote).  
+Feedback para parceiro na China: Relatório semanal (ex.: 'Vendidos 3.000 tijolos, demanda alta para telefones').  
+Design: Interface minimalista, tabelas responsivas, botão vermelho para logout.
+Integrações e Escalabilidade:  Banco de dados: Supabase (grátis até 500 MB) ou JSON local (para baixo custo inicial).  
+API WhatsApp Business: Enviar cotações/pedidos (ex.: link wa.me com mensagem pré-preenchida).  
+Futuro: Integração com pagamentos locais (ex.: M-Pesa, sujeito a taxas de 1-2%), rastreio de envios (Porto de Maputo).  
+SEO: Otimizado para 'materiais de construção Maputo', 'eletrônicos baratos Moçambique'.
+Requisitos Técnicos:Frontend: Next.js (React, TypeScript), Tailwind CSS (cores: azul #1E3A8A, vermelho #DC2626, amarelo #FBBF24).  
+Backend: Supabase (tabelas: produtos, estoque, pedidos) ou JSON local (armazenar em /data).  
+Hospedagem: Vercel (grátis para projetos pequenos) ou Bluehost (~3.000 MZN/ano).  
+Responsividade: Adaptado para mobile (80% dos usuários em Maputo usam smartphones).  
+Performance: Carregamento <3s, imagens otimizadas (<500 KB).  
+Segurança: Login admin com autenticação (Supabase Auth ou NextAuth), proteção contra XSS/SQL injection.
+
+Design e UX:Estilo: Moderno, limpo, inspirado em sites de varejo (ex.: OLX Moçambique, Alibaba).  
+Cores: Azul (fundo, confiança), vermelho (detalhes, Moçambique), amarelo (botões, ação).  
+Fontes: Inter ou Roboto (grátis, Google Fonts), 16pt (texto), 24pt (títulos).  
+Imagens: Produtos (tijolos, janelas, telefones) de bancos grátis (Unsplash/Pexels) ou placeholders para upload futuro.  
+Navegação: Menu fixo (Home, Catálogo, Sobre, Contacto), footer com contacto (email, WhatsApp).
+
+Orçamento e Contexto:Custo: 5.000 MZN (hospedagem ~3.000 MZN/ano, domínio .mz ~2.000 MZN).  
+Contexto: Sistema apoia importação da China (tijolos a 0,50 USD, janelas a 20 USD, telefones a 50 USD) com margem de 30-50% (ex.: tijolos vendidos a 25 MZN).  
+Público: Construtoras (B2B, ex.: via feiras como FEIMA), consumidores (B2C, Maputo).  
+Escalabilidade: Suportar 1.000+ produtos, 100 pedidos/mês, relatórios para parceiro na China.
+
+Saída Esperada:Código completo (Next.js, TypeScript, Tailwind) com estrutura de pastas:  /pages: Home, Produto, Carrinho, Admin.  
+/components: Header, Footer, ProductCard, AdminTable.  
+/data: JSON inicial (ex.: 5.000 tijolos, 100 janelas, 50 telefones).
+Interface gerada: Mockup visual com catálogo, carrinho, admin.  
+Instruções: README com passos para rodar localmente (npm install, npm run dev) e deploy (Vercel).
+
+Notas Adicionais:Priorizar simplicidade: Foco em catálogo e admin no MVP (1-2 semanas).  
+Testar localmente: Suporte a preços em MZN/USD, câmbio fixo (64 MZN/USD).  
+Feedback: Gerar relatórios exportáveis (CSV) para enviar ao parceiro (ex.: 'Vendidos 3.000 tijolos, lucro 65.000 MZN').  
+Exemplo visual: Inspirar-se em sites como OLX Moçambique ou Alibaba (catálogo claro, filtros simples).
+
+Por favor, gere o sistema com código funcional, interface visual e instruções de deploy. Inclua placeholders para imagens de produtos e dados iniciais (ex.: 5.000 tijolos a 25 MZN, 100 janelas a 1.600 MZN, 50 telefones a 5.000 MZN)."Instruções para Usar o Prompt no V0Acesse o V0:  Vá para v0.dev e faça login (use conta Vercel ou GitHub).  
+Clique em "Create New Project" ou equivalente.
+Inserir o Prompt:  Copie o prompt acima e cole na interface do V0 (área de texto para geração).  
+Verifique se o V0 está configurado para gerar código (React/Next.js) e interface visual.
+Personalizar (Opcional):  Imagens: Adicione placeholders (ex.: “tijolo.jpg”) ou URLs de Unsplash (ex.: unsplash.com/photos/construction).  
+Dados Iniciais: Inclua no JSON:  json
+
+[
+  { "id": 1, "nome": "Tijolo Cerâmico", "categoria": "Construção", "preco_mzn": 25, "preco_usd": 0.39, "estoque": 5000, "imagem": "tijolo.jpg" },
+  { "id": 2, "nome": "Janela Alumínio", "categoria": "Construção", "preco_mzn": 1600, "preco_usd": 25, "estoque": 100, "imagem": "janela.jpg" },
+  { "id": 3, "nome": "Smartphone 64GB", "categoria": "Eletrônicos", "preco_mzn": 5000, "preco_usd": 78, "estoque": 50, "imagem": "telefone.jpg" }
+]
+Cores: Ajuste no prompt se preferir outra paleta (ex.: verde em vez de amarelo).
+Gerar e Revisar:  Clique em "Generate" (ou equivalente).  
+V0 gerará:  Código (Next.js, Tailwind, Supabase/JSON).  
+Mockup visual (catálogo, carrinho, admin).  
+Instruções de deploy.
+Revise o código: Verifique /pages/index.tsx (catálogo), /pages/admin.tsx (painel), /data/products.json.  
+Teste localmente: npm install && npm run dev.
+Deploy:  Hospedagem: Use Vercel (grátis) ou Bluehost (~3.000 MZN/ano).  
+Domínio: Registre “maputoimporthub.mz” (~2.000 MZN, via MozDomains).  
+Configure Supabase (supabase.com): Crie tabelas para produtos, estoque, pedidos.
+Ajustes Pós-Geração:  Imagens: Substitua placeholders por fotos reais (envie ao V0 ou edite manualmente).  
+WhatsApp: Adicione link wa.me/+258[seu número]?text=Quero 5000 tijolos no botão de cotação.  
+Relatórios: Verifique exportação CSV no admin (ex.: id, produto, quantidade, total_mzn).
+Detalhes de Preços no SistemaProdutos:  Tijolos: Custo 0,50 USD (32 MZN), venda 25 MZN (margem ~22%).  
+Janelas: Custo 20 USD (1.280 MZN), venda 1.600 MZN (margem ~25%).  
+Telefones: Custo 50 USD (3.200 MZN), venda 5.000 MZN (margem ~36%).
+Orçamento do Sistema:  Hospedagem: Vercel (grátis) ou Bluehost (3.000 MZN/ano).  
+Domínio: 2.000 MZN/ano (.mz).  
+Total: 5.000 MZN (conforme plano).
+Câmbio: Fixo em 64 MZN/USD, com opção de atualizar manualmente no admin.
+
+Dicas para o V0Teste Iterativo: Se o V0 não gerar tudo de uma vez, divida o prompt:  Gere o catálogo (página inicial, produto, carrinho).  
+Gere o admin separadamente.
+Debug: Como estudante de Engenharia Informática, revise o código gerado (ex.: /components/ProductCard.tsx) para erros em lógica de estoque ou preços.  
+Imagens: Use placeholders no V0 e substitua por fotos reais (ex.: peça ao seu amigo na China).  
+Escalabilidade: Adicione M-Pesa ou rastreio de envios (Porto de Maputo) após o MVP.
+
+Próximos PassosTestar o Prompt: Copie e cole no V0. Se precisar de ajustes (ex.: mais ênfase em WhatsApp), me avise.  
+Wireframe: Posso gerar um esboço visual (ex.: layout do catálogo) para complementar o V0. Quer?  
+Planilha de Custos: Posso criar Google Sheet com preços detalhados (ex.: custo/venda por produto) para integrar ao sistema.  
+Suporte Técnico: Se quiser, posso orientar como revisar o código gerado ou configurar Supabase.
+
+Perguntas:  Quer ajustar o prompt (ex.: foco em B2B, menos carrinho)?  
+Precisa de ajuda com imagens ou dados iniciais para o JSON?  
+Como planeja usar o sistema (ex.: mostrar ao amigo antes de lançar)?
+
+Me diga como prosseguir!
+
