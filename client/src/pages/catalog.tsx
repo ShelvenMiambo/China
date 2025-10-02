@@ -21,15 +21,15 @@ export default function Catalog() {
   const activeCategory = selectedCategory || categoryFromUrl;
 
   const { data: products, isLoading } = useQuery<Product[]>({
-    queryKey: ["/api/products", { 
-      category: activeCategory, 
-      search: searchQuery 
+    queryKey: ["/api/products", {
+      category: activeCategory,
+      search: searchQuery
     }],
     queryFn: async () => {
       const params = new URLSearchParams();
       if (activeCategory) params.append('category', activeCategory);
       if (searchQuery) params.append('search', searchQuery);
-      
+
       const response = await fetch(`/api/products?${params}`);
       if (!response.ok) throw new Error('Failed to fetch products');
       return response.json();

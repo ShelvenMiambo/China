@@ -137,6 +137,59 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-semibold text-lg mb-4">Links Rápidos</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/" className="text-gray-400 hover:text-white transition">
+                  Início
+                </Link>
+              </li>
+              <li>
+                <Link href="/catalog" className="text-gray-400 hover:text-white transition">
+                  Catálogo
+                </Link>
+              </li>
+              <li>
+                <Link href="/cart" className="text-gray-400 hover:text-white transition">
+                  Carrinho
+                </Link>
+              </li>
+              <li>
+                <a href="#contact" className="text-gray-400 hover:text-white transition">
+                  Contato
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Business Info */}
+          <div>
+            <h4 className="font-semibold text-lg mb-4">Horário de Atendimento</h4>
+            <ul className="space-y-2 text-gray-400 text-sm">
+              <li>Segunda - Sexta: 8h - 18h</li>
+              <li>Sábado: 8h - 13h</li>
+              <li>Domingo: Fechado</li>
+            </ul>
+            <div className="mt-6">
+              <h4 className="font-semibold text-lg mb-3">Métodos de Pagamento</h4>
+              <p className="text-gray-400 text-sm">
+                Transferência Bancária, Dinheiro na Entrega, M-Pesa (em breve)
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-800 pt-8 mt-8 text-center text-gray-400 text-sm">
+          <p>&copy; {new Date().getFullYear()} Maputo Import Hub. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+  );
+}div>
         </div>
 
         {/* Bottom Bar */}

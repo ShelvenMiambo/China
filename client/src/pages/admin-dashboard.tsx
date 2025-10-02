@@ -380,7 +380,7 @@ export default function AdminDashboard() {
                               </p>
                             )}
                           </div>
-                          
+
                           <div>
                             <Label htmlFor="category">Categoria *</Label>
                             <Select
@@ -436,7 +436,7 @@ export default function AdminDashboard() {
                               </p>
                             )}
                           </div>
-                          
+
                           <div>
                             <Label htmlFor="stock">Estoque *</Label>
                             <Input

@@ -89,18 +89,14 @@ export default function Header() {
 
           {/* Cart and mobile menu */}
           <div className="flex items-center space-x-4">
-            <Link href="/cart">
-              <a className="relative text-gray-700 hover:text-maputo-primary transition" data-testid="cart-link">
-                <ShoppingCart className="w-6 h-6" />
-                {getTotalItems() > 0 && (
-                  <span 
-                    className="absolute -top-2 -right-2 bg-maputo-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
-                    data-testid="cart-count"
-                  >
-                    {getTotalItems()}
-                  </span>
-                )}
-              </a>
+            <Link href="/cart" className="hover:text-maputo-primary transition flex items-center">
+              <ShoppingCart className="w-4 h-4 mr-1" />
+              Carrinho
+              {getTotalItems() > 0 && (
+                <span className="ml-1 bg-maputo-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {getTotalItems()}
+                </span>
+              )}
             </Link>
 
             {/* Mobile menu */}
