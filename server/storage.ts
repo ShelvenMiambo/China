@@ -1,5 +1,9 @@
 import { type Product, type InsertProduct, type Order, type InsertOrder, type CartItem, type InsertCartItem, type AdminUser, type InsertAdminUser, type OrderItem } from "@shared/schema";
 import { randomUUID } from "crypto";
+import { drizzle } from "drizzle-orm/neon-http";
+import { neon } from "@neondatabase/serverless";
+import { eq, like, sql, and, gte, lte, lt } from "drizzle-orm";
+import { products, orders, cart_items, admin_users } from "@shared/schema";
 
 export interface IStorage {
   // Products
@@ -399,6 +403,170 @@ export class MemStorage implements IStorage {
 
   async getLowStockProducts(): Promise<Product[]> {
     return Array.from(this.products.values()).filter(p => p.stock < 50);
+  }
+}
+
+export class DbStorage implements IStorage {
+  private db: ReturnType<typeof drizzle>;
+
+  constructor() {
+    const sql = neon(process.env.DATABASE_URL!);
+    this.db = drizzle(sql, { schema: { products, orders, cart_items, admin_users } });
+  }
+
+  async getProducts(): Promise<Product[]> {
+    return await this.db.select().from(products);
+  }
+
+  async getProduct(id: string): Promise<Product | undefined> {
+    const result = await this.db.select().from(products).where(eq(products.id, id));
+    return result[0];
+  }
+
+  async getProductsByCategory(category: string): Promise<Product[]> {
+    return await this.db.select().from(products).where(eq(products.category, category));
+  }
+
+  async searchProducts(query: string): Promise<Product[]> {
+    const searchTerm = `%${query}%`;
+    return await this.db.select().from(products).where(
+      sql`${products.name} ILIKE ${searchTerm} OR ${products.description} ILIKE ${searchTerm} OR ${products.category} ILIKE ${searchTerm}`
+    );
+  }
+
+  async createProduct(insertProduct: InsertProduct): Promise<Product> {
+    const result = await this.db.insert(products).values(insertProduct).returning();
+    return result[0];
+  }
+
+  async updateProduct(id: string, updateData: Partial<InsertProduct>): Promise<Product | undefined> {
+    const result = await this.db.update(products).set(updateData).where(eq(products.id, id)).returning();
+    return result[0];
+  }
+
+  async deleteProduct(id: string): Promise<boolean> {
+    const result = await this.db.delete(products).where(eq(products.id, id));
+    return result.rowCount > 0;
+  }
+
+  async updateProductStock(id: string, stock: number): Promise<Product | undefined> {
+    return await this.updateProduct(id, { stock });
+  }
+
+  async getOrders(): Promise<Order[]> {
+    return await this.db.select().from(orders);
+  }
+
+  async getOrder(id: string): Promise<Order | undefined> {
+    const result = await this.db.select().from(orders).where(eq(orders.id, id));
+    return result[0];
+  }
+
+  async createOrder(insertOrder: InsertOrder): Promise<Order> {
+    const result = await this.db.insert(orders).values(insertOrder).returning();
+    return result[0];
+  }
+
+  async updateOrderStatus(id: string, status: string): Promise<Order | undefined> {
+    const result = await this.db.update(orders).set({ status }).where(eq(orders.id, id)).returning();
+    return result[0];
+  }
+
+  async getCartItems(sessionId: string): Promise<(CartItem & { product: Product })[]> {
+    const result = await this.db
+      .select({
+        id: cart_items.id,
+        session_id: cart_items.session_id,
+        product_id: cart_items.product_id,
+        quantity: cart_items.quantity,
+        created_at: cart_items.created_at,
+        product: products,
+      })
+      .from(cart_items)
+      .innerJoin(products, eq(cart_items.product_id, products.id))
+      .where(eq(cart_items.session_id, sessionId));
+    return result;
+  }
+
+  async addToCart(insertCartItem: InsertCartItem): Promise<CartItem> {
+    // Check if item already exists
+    const existing = await this.db
+      .select()
+      .from(cart_items)
+      .where(and(eq(cart_items.session_id, insertCartItem.session_id), eq(cart_items.product_id, insertCartItem.product_id)));
+
+    if (existing.length > 0) {
+      // Update quantity
+      const newQuantity = existing[0].quantity + insertCartItem.quantity;
+      const result = await this.db
+        .update(cart_items)
+        .set({ quantity: newQuantity })
+        .where(eq(cart_items.id, existing[0].id))
+        .returning();
+      return result[0];
+    } else {
+      // Insert new
+      const result = await this.db.insert(cart_items).values(insertCartItem).returning();
+      return result[0];
+    }
+  }
+
+  async updateCartItemQuantity(id: string, quantity: number): Promise<CartItem | undefined> {
+    if (quantity <= 0) {
+      await this.db.delete(cart_items).where(eq(cart_items.id, id));
+      return undefined;
+    }
+    const result = await this.db.update(cart_items).set({ quantity }).where(eq(cart_items.id, id)).returning();
+    return result[0];
+  }
+
+  async removeFromCart(id: string): Promise<boolean> {
+    const result = await this.db.delete(cart_items).where(eq(cart_items.id, id));
+    return result.rowCount > 0;
+  }
+
+  async clearCart(sessionId: string): Promise<boolean> {
+    await this.db.delete(cart_items).where(eq(cart_items.session_id, sessionId));
+    return true;
+  }
+
+  async getAdminUser(email: string): Promise<AdminUser | undefined> {
+    const result = await this.db.select().from(admin_users).where(eq(admin_users.email, email));
+    return result[0];
+  }
+
+  async createAdminUser(insertUser: InsertAdminUser): Promise<AdminUser> {
+    const result = await this.db.insert(admin_users).values(insertUser).returning();
+    return result[0];
+  }
+
+  async getSalesReport(startDate?: Date, endDate?: Date): Promise<any> {
+    let whereClause = sql`true`;
+    if (startDate) whereClause = and(whereClause, gte(orders.created_at, startDate));
+    if (endDate) whereClause = and(whereClause, lte(orders.created_at, endDate));
+
+    const result = await this.db
+      .select({
+        total_sales_mzn: sql<number>`sum(${orders.total_mzn})`,
+        total_sales_usd: sql<number>`sum(${orders.total_usd})`,
+        total_orders: sql<number>`count(*)`,
+        products_sold: sql<number>`sum(jsonb_array_length(${orders.items}))`,
+        orders: sql<Order[]>`array_agg(${orders})`,
+      })
+      .from(orders)
+      .where(whereClause);
+
+    return result[0];
+  }
+
+  async getCategoryPerformance(): Promise<any> {
+    // This is complex, need to aggregate from orders.items
+    // For simplicity, return empty for now - can be implemented later
+    return [];
+  }
+
+  async getLowStockProducts(): Promise<Product[]> {
+    return await this.db.select().from(products).where(lt(products.stock, 50));
   }
 }
 

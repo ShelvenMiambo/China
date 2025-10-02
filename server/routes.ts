@@ -1,8 +1,10 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { DbStorage } from "./storage";
 import { insertProductSchema, insertOrderSchema, insertCartItemSchema } from "@shared/schema";
 import { z } from "zod";
+
+const storage = new DbStorage();
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Products
