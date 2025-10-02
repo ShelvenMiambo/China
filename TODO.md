@@ -21,15 +21,16 @@
 - [x] Create api/reports/export/sales.ts (GET /api/reports/export/sales)
 
 ## 3. Create Vercel Configuration
-- [ ] Add vercel.json with rewrites for frontend and API
+- [x] Add vercel.json with rewrites for frontend and API
 
 ## 4. Update Build Scripts
-- [ ] Modify package.json scripts for Vercel deployment
+- [x] Modify package.json scripts for Vercel deployment
 
 ## 5. Environment Variables
-- [ ] Document DATABASE_URL setup
+- [ ] Set DATABASE_URL in Vercel environment variables
 
 ## 6. Testing and Deployment
-- [ ] Test serverless functions locally
-- [ ] Deploy frontend as static site
-- [ ] Configure Vercel project settings
+- [x] Push code to GitHub repository https://github.com/ShelvenMiambo/China.git
+- [ ] Connect Vercel to the GitHub repo and deploy
+- [ ] Set up PostgreSQL database (e.g., Neon) and run migrations
+- [ ] Test the deployed app

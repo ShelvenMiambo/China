@@ -185,21 +185,3 @@ export default function Footer() {
     </footer>
   );
 }
-        <div className="border-t border-gray-800 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2024 Maputo Import Hub. Todos os direitos reservados.
-            </p>
-            <div className="flex items-center space-x-4">
-              <span className="text-gray-400 text-sm">Câmbio: 1 USD = {EXCHANGE_RATE} MZN</span>
-              <span className="text-gray-600">|</span>
-              <a href="#" className="text-gray-400 hover:text-white text-sm">Termos de Serviço</a>
-              <span className="text-gray-600">|</span>
-              <a href="#" className="text-gray-400 hover:text-white text-sm">Privacidade</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
